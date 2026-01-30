@@ -74,11 +74,11 @@
         </div>
 
         <!-- Photo URL -->
-        <div>
+        <!-- <div>
             <label class="text-white">Photo URL</label>
-            <input type="text" name="photo" value="{{ old('photo') }}"
+            <input type="file" name="photo" value="{{ old('photo') }}"
                    class="w-full px-4 py-2 rounded-xl bg-white/80 focus:outline-none focus:ring-2 focus:ring-blue-400">
-        </div>
+        </div> -->
 
         <!-- Button -->
         <button type="submit"
