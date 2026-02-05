@@ -10,10 +10,10 @@ class SearchController extends Controller
     {
         $query = $request->q;
 
-        $users = User::where('pseudo', 'LIKE', "%$query%")
-                    ->orWhere('email', 'LIKE', "%$query%")
-                    ->get();
+        $users = User::where('pseudo', 'LIKE', "%$query%")->orWhere('email', 'LIKE', "%$query%")->get();
 
         return view('dashboard', compact('users'));
     }
+
+    
 }

@@ -1,3 +1,4 @@
+
 <!-- resources/views/dashboard.blade.php -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,6 +18,8 @@
     <div class="flex items-center gap-6">
         <a href="{{ route('profile.edit') }}" class="text-pink-400 hover:text-white font-medium">Profile</a>
         <a href="{{ route('dashboard') }}" class="text-pink-400 hover:text-white font-medium">Dashboard</a>
+        <a href="{{ route('friendRequest.recevoir')}}" class="text-pink-400 hover:text-white font-medium">Demandes d'amis</a>
+        <a href="{{ route('friendRequest.friends') }}" class="text-pink-400 hover:text-white font-medium">Mes amis</a>
 
         <form action="{{ route('logout') }}" method="POST">
             @csrf
@@ -30,11 +33,15 @@
 <!-- Main -->
 <div class="max-w-6xl mx-auto mt-10 px-4 space-y-10">
 
-    <!-- Profile Card -->
+    <!-- Profile  -->
     <div class="bg-gray-800/70 rounded-3xl shadow-xl p-8 flex flex-col md:flex-row items-center gap-8">
-        <!-- Avatar -->
-        <div class="w-32 h-32 rounded-full overflow-hidden bg-gray-600">
-            <img src="{{ auth()->user()->photo ?? 'https://via.placeholder.com/150' }}" class="w-full h-full object-cover">
+        <!-- img -->
+        <div class="w-32 h-32 rounded-full overflow-hidden bg-gray-300 flex items-center justify-center">
+            @if(auth()->user()->image)
+                <img src="{{asset('storage/'.$user->image)}}" class ="w-full h-full object-cover">
+            @else
+                <span class="text-gray-6000 test-4xl">👤</span>
+            @endif
         </div>
 
         <!-- Info -->
@@ -44,7 +51,7 @@
         </div>
     </div>
 
-    <!-- 🔍 Search Bar -->
+    <!--Search Bar -->
     <div class="flex justify-center">
         <form action="{{ route('search') }}" method="GET" class="flex w-full max-w-lg gap-4">
             <input 
@@ -57,19 +64,26 @@
         </form>
     </div>
 
-    <!-- 👥 Search Results -->
+    <!-- Search Results -->
     @if(isset($users))
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         @forelse($users as $user)
             <div class="bg-gray-800/70 rounded-2xl shadow p-6 text-center hover:scale-105 transition transform">
-                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-600">
-                    <img src="{{ $user->photo ?? 'https://via.placeholder.com/150' }}" class="w-full h-full object-cover">
-                </div>
+            <div class="overflow-hidden flex items-center justify-center w-24 h-24 mx-auto rounded-full bg-gray-600">
+                @if(auth()->user()->image)
+                    <img src="{{asset('storage/'.$user->image)}}" class ="w-full h-full object-cover">
+                @else
+                    <span class="text-gray-6000 test-4xl">👤</span>
+                @endif
+            </div>
                 <h3 class="mt-4 text-lg font-bold">{{ $user->pseudo ?? $user->name }}</h3>
                 <p class="text-gray-400 text-sm">{{ $user->email }}</p>
-                <a href="#" class="inline-block mt-4 bg-pink-500 hover:bg-pink-600 text-white px-5 py-2 rounded-full transition">
-                    View Profile
-                </a>
+                <form action="{{ route('friendRequest.send', $user->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="inline-block mt-4 bg-pink-500 hover:bg-pink-600 text-white px-5 py-2 rounded-full transition">
+                        Envoyer une invitation
+                    </button>
+                </form>
             </div>
         @empty
             <p class="text-gray-500 col-span-3 text-center">Aucun utilisateur trouvé.</p>
