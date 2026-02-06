@@ -16,6 +16,7 @@
         <a href="{{ route('dashboard') }}" class="text-pink-400 hover:text-white font-medium">Dashboard</a>
         <a href="{{ route('friendRequest.recevoir')}}" class="text-pink-400 hover:text-white font-medium">Demandes d'amis</a>
         <a href="{{ route('friendRequest.friends') }}" class="text-pink-400 hover:text-white font-medium">Mes amis</a>
+        <a href="{{ route('home') }}" class="hover:text-pink-500 transition font-medium text-left">posts</a>
 
         <form action="{{ route('logout') }}" method="POST">
             @csrf

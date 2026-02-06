@@ -18,4 +18,4 @@ VALUES
 ('youssefM', 'Youssef', 'M', 'youssef@example.com', NOW(), 'hashed_password2'),
 ('aminaB', 'Amina', 'B', 'amina@example.com', NULL, 'hashed_password3');
 
-select * from users ;
+select * from posts ;

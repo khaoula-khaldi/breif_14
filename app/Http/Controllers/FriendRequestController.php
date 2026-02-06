@@ -64,7 +64,7 @@ class FriendRequestController extends Controller
                 ->orWhere('sender_id',$user_id);
             })
             ->get();
-
+        $user_id= auth()->id();
         $friend_ids = $friends->pluck('sender_id')
             ->merge($friends->pluck('receiver_id'))
             ->unique()
